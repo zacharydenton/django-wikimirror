@@ -1,1 +1,3 @@
 *.pyc
+*.svn*
+mediawiki_sa/images/*

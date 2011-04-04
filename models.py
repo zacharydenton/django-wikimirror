@@ -3,6 +3,7 @@ from wikimirror import wikidump_dir, parser_script
 import re
 import shlex
 import subprocess
+import HTMLParser
 
 # Create your models here.
 class Article(models.Model):
@@ -14,5 +15,7 @@ class Article(models.Model):
     def content(self):
         p = subprocess.Popen(shlex.split('perl {script} "{archive}" "{title}"'.format(script=parser_script, archive=self.archive, title=self.title)), stdout=subprocess.PIPE)
         stdout, stderr = p.communicate()
-        filename = stdout.strip()
-        return open(filename).read().strip()
+        return open(stdout.strip()).read()
+
+    def __unicode__(self):
+        return self.title

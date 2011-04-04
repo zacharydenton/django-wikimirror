@@ -64,22 +64,7 @@ sub ShowTopic {
 	}
 	close RESULT;
 	my $path = dirname(abs_path($0));
-	system("cd $path/mediawiki_sa/ && php5 testparser.php /tmp/result.$$ > /tmp/result.$$.html");
-	if (($? == -1) || ($? & 127) || ($? >> 8)) {
-		print "#### mediawiki_sa parser failed! report to woc.fslab.de ####\n";
-		open FALLBACK, ">/tmp/result.$$.html";
-		print FALLBACK "<html><head><title>woc.fslab.de parser failed - report it!</title></head>\n<body>\n";
-		print FALLBACK "<h2>woc.fslab.de parser failed, please report this content (/tmp/result.$$) to them!</h2>";
-		open DATA, "/tmp/result.$$";
-		while(<DATA>) {
-			chomp;
-			print FALLBACK $_."<BR/>\n";
-		}
-		close DATA;
-		print FALLBACK "</body>\n</html>\n";
-		close FALLBACK;
-	}
-
+    system("cd $path/mediawiki_sa/ && php5 testparser.php /tmp/result.$$ > /tmp/result.$$.html");
 	return "/tmp/result.$$.html";
 }
 

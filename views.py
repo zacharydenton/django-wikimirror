@@ -10,7 +10,7 @@ def article(request, source, article_slug):
     if article_slug.endswith("/"):
         article_slug = title[:-1]
     try:
-        article = get_object_or_404(Article, source=source, title=article_slug.replace('_', ' '))
+        article = get_object_or_404(Article, source=source, title__exact=article_slug.replace('_', ' '))
     except Article.MultipleObjectsReturned:
-        article = Article.objects.filter(source=source, title=article_slug.replace('_', ' '))[0]
+        article = Article.objects.filter(source=source, title__exact=article_slug.replace('_', ' '))[0]
     return render_to_response('wikimirror/article.html', {'article': article}, context_instance=RequestContext(request)) 

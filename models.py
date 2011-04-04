@@ -19,3 +19,6 @@ class Article(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    class Meta:
+        unique_together = ('title', 'source')

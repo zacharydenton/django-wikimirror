@@ -38,7 +38,7 @@ if ( $wgCommandLineMode ) {
 
 $wgSitename         = "Testwiki";
 
-$wgScriptPath	    = "/scripts";
+$wgScriptPath	    = "";
 $wgScript           = "$wgScriptPath/index.php";
 $wgRedirectScript   = "$wgScriptPath/redirect.php";
 
@@ -52,7 +52,7 @@ $wgStylePath        = "$wgScriptPath/skins";
 $wgStyleDirectory   = "$IP/skins";
 $wgLogo             = "$wgStylePath/common/images/wiki.png";
 
-$wgUploadPath       = "$wgScriptPath/images";
+$wgUploadPath       = "$wgScriptPath/static/images";
 $wgUploadDirectory  = "$IP/images";
 
 $wgEnableEmail = true;
@@ -101,7 +101,7 @@ $wgImageMagickConvertCommand = "/usr/bin/convert";
 
 ## If you have the appropriate support software installed
 ## you can enable inline LaTeX equations:
-$wgUseTeX	         = true;
+$wgUseTeX	         = false;
 $wgMathPath         = "{$wgUploadPath}/math";
 $wgMathDirectory    = "{$wgUploadDirectory}/math";
 $wgTmpDirectory     = "{$wgUploadDirectory}/tmp";

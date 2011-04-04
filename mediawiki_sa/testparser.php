@@ -1,5 +1,6 @@
 <?php
 
+
 error_reporting(0);
 
 // fnatter 2006-11-02:
@@ -118,6 +119,8 @@ if ($argv[1] == "-") {
 } else
   $markup = file_get_contents($argv[1]);
 
+$url_prefix = "/".$argv[2]."/";
+
 // title is in first line, extract it
 $newlineidx = strpos($markup, "\n");
 $articletitle = trim(substr($markup, 0, $newlineidx));
@@ -153,7 +156,7 @@ $wgMessageCache->addMessage( 'pfunc_rel2abs_invalid_depth', "Error: Invalid dept
 
 $title = new Title();
 $options = new ParserOptions(null); // 1st arg: $user
-$options->setUseTeX(true);
+$options->setUseTeX(false);
 $options->setEditSection(false);
 //require('skins/CologneBlue.php');
 require('skins/Simple.php');
@@ -162,9 +165,9 @@ $options->setSkin(new SkinSimple());
 $output_obj = $p->parse($markup, $title, $options);
 $text = $output_obj->getText();
 // http://localhost/~felix/mediawiki_sa/index.php?title=Wolf&action=edit
-$text = preg_replace("/scripts\/index\.php\?title=([^&]*)&amp;action=edit/", "$1/", $text);
+$text = preg_replace("/\/index\.php\?title=([^&]*)&amp;action=edit/", "$url_prefix$1", $text);
 // /%7Efelix/mediawiki_sa/index.php/Mammal"
-$text = preg_replace("/scripts\/index\.php\/([^\"]*)/", "$1/", $text); #woc
+$text = preg_replace("/\/index\.php\/([^\"]*)/", "$url_prefix$1", $text); #woc
 
 //$out = mb_convert_encoding($text, "UTF-8", "UTF-8");
 

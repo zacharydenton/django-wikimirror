@@ -37,9 +37,8 @@ class Command(BaseCommand):
             for archive in glob.iglob(os.path.join(dump_dir, 'rec*.bz2')):
                 p = subprocess.Popen("bzcat '{archive}' | grep '<title' | perl -ne 'm/<title>([^<]+)<\/title>/ && print $1.\"\\n\";'".format(archive=archive), shell=True, stdout=subprocess.PIPE)
                 stdout, stderr = p.communicate()
-                for i, title in enumerate(stdout.splitlines()):
-                    if i % 5000 == 0:
-                        print i, "articles indexed so far"
+                processed = 0
+                for title in stdout.splitlines():
                     article = Article(title=title, archive=os.path.abspath(archive), source=source)
                     article.save()
                 transaction.commit()

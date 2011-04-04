@@ -14,7 +14,7 @@ sub LooseEntities {
 }
 
 sub ShowTopic {
-	(my $found, my $foundLine) = @_;
+	(my $found, my $foundLine, my $source) = @_;
 	my $regexp = $foundLine;
 	open RESULT, ">/tmp/result.$$";
 	print RESULT "$foundLine\n";
@@ -64,11 +64,11 @@ sub ShowTopic {
 	}
 	close RESULT;
 	my $path = dirname(abs_path($0));
-    system("cd $path/mediawiki_sa/ && php5 testparser.php /tmp/result.$$ > /tmp/result.$$.html");
+    system("cd $path/mediawiki_sa/ && php5 testparser.php /tmp/result.$$ $source > /tmp/result.$$.html");
 	return "/tmp/result.$$.html";
 }
 
-die "Usage: $0 file.bz2 title\n"
-unless @ARGV == 2;
+die "Usage: $0 file.bz2 title source\n"
+unless @ARGV == 3;
 
-print ShowTopic($ARGV[0], $ARGV[1]) . "\n";
+print ShowTopic($ARGV[0], $ARGV[1], $ARGV[2]) . "\n";

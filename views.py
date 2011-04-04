@@ -5,9 +5,12 @@ from models import Article
 # Create your views here.
 
 @cache_page(60 * 60 * 24 * 30)
-def article(request, article_slug):
+def article(request, source, article_slug):
     article_slug = article_slug.encode('utf-8')
     if article_slug.endswith("/"):
         article_slug = title[:-1]
-    article = get_object_or_404(Article, title=article_slug.replace('_', ' '))
+    try:
+        article = get_object_or_404(Article, source=source, title=article_slug.replace('_', ' '))
+    except Article.MultipleObjectsReturned:
+        article = Article.objects.filter(source=source, title=article_slug.replace('_', ' '))[0]
     return render_to_response('wikimirror/article.html', {'article': article}, context_instance=RequestContext(request)) 

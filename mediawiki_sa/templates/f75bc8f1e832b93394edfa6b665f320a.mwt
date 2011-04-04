@@ -1,3 +1,0 @@
-|}
-
-[[Template:Prettytable]] is no longer to be used.  Instead add <tt>'''class="wikitable"'''</tt> to your table to get that result.

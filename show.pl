@@ -21,6 +21,7 @@ sub ShowTopic {
 	my $getText = 0;
 	my $insideText = 0;
 	my $foundEndText = 0;
+    my $findNextCounter = 0;
 	while(1) {
 		open XML, "bzip2 -cd \"$found\" |";
 		while(<XML>) {
@@ -56,15 +57,20 @@ sub ShowTopic {
 			last;
 		} else {
 			# Need the rest from the next bzip2 volume
-			$found =~ m/rec(\d\d\d\d\d)/;
-			my $nextNum = $1 + 1;
-			$nextNum = sprintf "%05d", $nextNum;
-			$found =~ s/rec\d\d\d\d\d/rec$nextNum/;
+            if ($findNextCounter > 5) {
+                last;
+            } else {
+			    $found =~ m/rec(\d\d\d\d\d)/;
+			    my $nextNum = $1 + 1;
+			    $nextNum = sprintf "%05d", $nextNum;
+			    $found =~ s/rec\d\d\d\d\d/rec$nextNum/;
+                $findNextCounter += 1;
+            }
 		}
 	}
 	close RESULT;
 	my $path = dirname(abs_path($0));
-    system("cd $path/mediawiki_sa/ && php5 testparser.php /tmp/result.$$ $source > /tmp/result.$$.html");
+    system("cd $path/mediawiki_sa/ && php testparser.php /tmp/result.$$ $source > /tmp/result.$$.html");
 	return "/tmp/result.$$.html";
 }
 

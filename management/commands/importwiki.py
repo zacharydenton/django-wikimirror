@@ -41,5 +41,5 @@ class Command(BaseCommand):
                 for title in stdout.splitlines():
                     article = Article(title=title, archive=os.path.abspath(archive), source=source)
                     article.save()
-                transaction.commit()
+            transaction.commit()
 

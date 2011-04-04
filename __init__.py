@@ -9,3 +9,4 @@ except:
     wikidump_dir = os.path.expanduser("~/wikidumps")
 
 parser_script = load_path('show.pl')
+renderer = load_path('mediawiki_sa')

@@ -12,10 +12,16 @@ class Command(BaseCommand):
         templates = Article.objects.filter(title__contains="Template:")
         template_dir = os.path.join(renderer, 'templates')
         for template in templates:
+            if 'doc' in template.title.lower():
+                continue
             md5 = hashlib.md5()
-            md5.update(template.title.replace('Template:', '').lower().encode('utf-8'))
+            title = template.title.replace('Template:', '')
+            title = title.lower()
+            md5.update(title)
             name = '{hash}.mwt'.format(hash=md5.hexdigest())
-            filename = os.path.join(template_dir, name) 
+            filename = os.path.join(template_dir, template.source, name) 
+            if not os.path.isdir(os.path.dirname(filename)):
+                os.makedirs(os.path.dirname(filename))
             if not os.path.exists(filename):
                 f = open(filename, 'w')
                 f.write(template.content)

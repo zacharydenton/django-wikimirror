@@ -16,7 +16,7 @@ sub LooseEntities {
 sub ShowTopic {
 	(my $found, my $foundLine, my $source) = @_;
 	my $regexp = $foundLine;
-	open RESULT, ">/tmp/result.$$";
+	open RESULT, ">/var/tmp/result.$$";
 	print RESULT "$foundLine\n";
 	my $getText = 0;
 	my $insideText = 0;
@@ -70,8 +70,8 @@ sub ShowTopic {
 	}
 	close RESULT;
 	my $path = dirname(abs_path($0));
-    system("cd $path/mediawiki_sa/ && php testparser.php /tmp/result.$$ $source > /tmp/result.$$.html");
-	return "/tmp/result.$$.html";
+    system("cd $path/mediawiki_sa/ && php testparser.php /var/tmp/result.$$ $source > /var/tmp/result.$$.html");
+	return "/var/tmp/result.$$.html";
 }
 
 die "Usage: $0 file.bz2 title source\n"

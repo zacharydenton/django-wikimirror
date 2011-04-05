@@ -119,7 +119,8 @@ if ($argv[1] == "-") {
 } else
   $markup = file_get_contents($argv[1]);
 
-$url_prefix = "/".$argv[2]."/";
+$source = $argv[2];
+$url_prefix = "/".$source."/";
 
 // title is in first line, extract it
 $newlineidx = strpos($markup, "\n");
@@ -157,6 +158,7 @@ $wgMessageCache->addMessage( 'pfunc_rel2abs_invalid_depth', "Error: Invalid dept
 $title = new Title();
 $options = new ParserOptions(null); // 1st arg: $user
 $options->setUseTeX(false);
+$options->setSource($source);
 $options->setEditSection(false);
 //require('skins/CologneBlue.php');
 require('skins/Simple.php');

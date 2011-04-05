@@ -5,7 +5,9 @@ from models import Article
 # Create your views here.
 
 @cache_page(60 * 60 * 24 * 30)
-def article(request, source, article_slug):
+def article(request, source, article_slug=""):
+    if article_slug == "":
+        article_slug = "Main_Page"
     article_slug = article_slug.encode('utf-8')
     if article_slug.endswith("/"):
         article_slug = title[:-1]

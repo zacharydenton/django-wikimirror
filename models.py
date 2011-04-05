@@ -13,7 +13,7 @@ class Article(models.Model):
 
     @property
     def content(self):
-        p = subprocess.Popen(shlex.split('perl {script} "{archive}" "{title}" "{source}"'.format(script=parser_script, archive=self.archive, title=self.title.encode('utf-8'), source=self.source)), stdout=subprocess.PIPE)
+        p = subprocess.Popen(shlex.split('perl {script} "{archive}" "{title}" "{source}"'.format(script=parser_script, archive=self.archive, title=self.title, source=self.source)), stdout=subprocess.PIPE)
         stdout, stderr = p.communicate()
         return open(stdout.strip()).read()
 
